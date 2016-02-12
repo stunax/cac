@@ -10,7 +10,7 @@ This is done to keep the simulation simple enough for teaching purposes
 All the work is done in the calc_force, move and random_galaxy functions.
 To vectorize the code these are the functions to transform.
 """
-import numpy
+import numpy as np
 from numpy import exp, arctan, sqrt, pi, cos, sin
 from numpy.random import random
 
@@ -24,27 +24,38 @@ def calc_force(a, b, dt):
     """Calculate forces between bodies
     F = ((G m_a m_b)/r^2)*((x_b-x_a)/r)
     """
-
+    #r = np.sum((b[:,-3:]-a[np.newaxis,-3:])**2,axis = 1)**0.5
     r = ((b['x'] - a['x']) ** 2 + (b['y'] - a['y']) ** 2 + (b['z'] - a['z']) ** 2) ** 0.5
     a['vx'] += G * a['m'] * b['m'] / r ** 2 * ((b['x'] - a['x']) / r) / a['m'] * dt
     a['vy'] += G * a['m'] * b['m'] / r ** 2 * ((b['y'] - a['y']) / r) / a['m'] * dt
     a['vz'] += G * a['m'] * b['m'] / r ** 2 * ((b['z'] - a['z']) / r) / a['m'] * dt
 
+def calc_force2(a, b, dt):
+    """Calculate forces between bodies
+    F = ((G m_a m_b)/r^2)*((x_b-x_a)/r)
+    """
+    r = np.sum((b[:,1:4]-a[np.newaxis,1:4])**2,axis = 1)**0.5
+    
+    a[4:8] += G*a[0]*b[:,0] / (r**2) * ((b[:,1:4] - a[1:4])/r) /a[0] * dt
 
 def move(solarsystem, asteroids, dt):
     """Move the bodies
     first find forces and change velocity and then move positions
     """
+    for i,planet in enumerate(solarsystem):
+        calc_force2(planet,solarsystem[np.arange(len(solarsystem)) != i],dt)
+        
+    for ast in asteroids:
+        calc_force2(ast,solarsystem,dt)
 
-
-    for i in solarsystem:
-        for j in solarsystem:
-            if i != j:
-                calc_force(i, j, dt)
-
-    for i in asteroids:
-        for j in solarsystem:
-                calc_force(i, j, dt)
+#    for i in solarsystem:
+#        for j in solarsystem:
+#            if i != j:
+#                calc_force(i, j, dt)
+#
+#    for i in asteroids:
+#        for j in solarsystem:
+#                calc_force(i, j, dt)
 
     for i in solarsystem+asteroids:
         i['x'] += i['vx'] * dt
@@ -71,7 +82,7 @@ def random_system(
     ):
     """Generate a galaxy of random bodies"""
     # n+1 to include the sun.
-    _planets = np.zeroes(n+1,7)
+    #_planets = np.zeros(n+1,7)
     
     solarsystem = [{'m': 1e6*solarmass, 'x': 0, 'y': 0, 'z': 0, 'vx': 0, 'vy': 0, 'vz': 0}]
     for i in xrange(n):

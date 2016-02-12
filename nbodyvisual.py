@@ -68,6 +68,7 @@ def show(sub, solarsystem, bodies):
         print 'Warning: correct 3D plots may require matplotlib-1.1 or later'
 
     plt.draw()
+    plt.pause(0.0000001)
 
 
 def nbody_debug(n, bodies, time_step):
