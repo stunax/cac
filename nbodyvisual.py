@@ -31,33 +31,35 @@ def show(sub, solarsystem, bodies):
     sub.clear()
 
     sub.scatter(
-                solarsystem[0]['x'],
-                solarsystem[0]['y'],
-                solarsystem[0]['z'],
+                solarsystem[0,1],
+                solarsystem[0,2],
+                solarsystem[0,3],
                 s=100,
                 marker='o',
                 c='yellow',
             )
     #Planets
-    sub.scatter(
-                [i['x'] for i in solarsystem[1:]],
-                [i['y'] for i in solarsystem[1:]],
-                [i['z'] for i in solarsystem[1:]],
-                s=5,
-                marker='o',
-                c='blue',
-        )
+    sub.scatter(solarsystem[1:,1],solarsystem[1:,2],solarsystem[1:,3],s = 5,marker = 'o',c = "blue")
+#    sub.scatter(
+#                [i['x'] for i in solarsystem[1:]],
+#                [i['y'] for i in solarsystem[1:]],
+#                [i['z'] for i in solarsystem[1:]],
+#                s=5,
+#                marker='o',
+#                c='blue',
+#        )
 
-
+    
 #Asteroids
-    sub.scatter(
-                [i['x'] for i in bodies],
-                [i['y'] for i in bodies],
-                [i['z'] for i in bodies],
-                s=.1,
-                marker='.',
-                c='green',
-        )
+    sub.scatter(bodies[1:,1],bodies[1:,2],bodies[1:,3],s = 1,marker = '.',c = "green")
+#    sub.scatter(
+#                [i['x'] for i in bodies],
+#                [i['y'] for i in bodies],
+#                [i['z'] for i in bodies],
+#                s=.1,
+#                marker='.',
+#                c='green',
+#        )
 
 
     sub.set_xbound(-sub.xm, sub.xm)
