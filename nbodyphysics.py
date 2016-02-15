@@ -30,29 +30,54 @@ solarmass=1.98892e30
 #    a['vy'] += G * a['m'] * b['m'] / r ** 2 * ((b['y'] - a['y']) / r) / a['m'] * dt
 #    a['vz'] += G * a['m'] * b['m'] / r ** 2 * ((b['z'] - a['z']) / r) / a['m'] * dt
 
-def calc_force(a, b, dt):
+def calc_force_vec(a, b, dt):
     """Calculate forces between bodies
     F = ((G m_a m_b)/r^2)*((x_b-x_a)/r)
     """
-    r = np.sum((b[:,1:4]-a[np.newaxis,1:4])**2,axis = 1)**0.5
 
-    a[4:7] += np.sum((G*a[0]*b[:,0] / (r**2))[:,np.newaxis] * 
-        ((b[:,1:4] - a[1:4])/r[:,np.newaxis]) /a[0] * dt,axis = 0)
+    temp =  b[np.newaxis,:,1:4] - a[:,np.newaxis,1:4]
+
+    r = np.sum(temp**2,axis = 2)**0.5
+
+    a[:,4:7] += np.sum(
+        (G*a[:,np.newaxis,0]*b[np.newaxis,:,0]/(r**2))[:,:,np.newaxis] *
+        (temp / r[:,:,np.newaxis] / a[:,np.newaxis,np.newaxis,0] * dt)
+        ,axis = 1
+    )
+    #r = np.sum((b[:,1:4]-a[np.newaxis,1:4])**2,axis = 1)**0.5
+
+    #a[4:7] += np.sum((G*a[0]*b[:,0] / (r**2))[:,np.newaxis] *
+    #    ((b[:,1:4] - a[1:4])/r[:,np.newaxis]) /a[0] * dt,axis = 0)
 #    a[4] += np.sum(G*a[0]*b[:,0] / (r**2) * ((b[:,1] - a[1])/r) /a[0] * dt)
 #    a[5] += np.sum(G*a[0]*b[:,0] / (r**2) * ((b[:,2] - a[2])/r) /a[0] * dt)
 #    a[6] += np.sum(G*a[0]*b[:,0] / (r**2) * ((b[:,3] - a[3])/r) /a[0] * dt)
+
+
+def calc_force(a, b, dt,solar):
+    """Calculate forces between bodies
+    F = ((G m_a m_b)/r^2)*((x_b-x_a)/r)
+    """
+    temp =  b[np.newaxis,:,1:4] - a[:,np.newaxis,1:4]
+
+
+    r = np.sum(temp**2,axis = 2)**0.5
+    if solar:
+        r[np.diag_indices(r.shape[0])] = 1
+
+
+    a[:,4:7] += np.sum(
+        (G*a[:,np.newaxis,0]*b[np.newaxis,:,0]/(r**2))[:,:,np.newaxis] *
+        (temp / r[:,:,np.newaxis] / a[:,np.newaxis,np.newaxis,0] * dt)
+        ,axis = 1
+    )
 
 def move(solarsystem, asteroids, dt):
     """Move the bodies
     first find forces and change velocity and then move positions
     """
-        
-    
-    for i,planet in enumerate(solarsystem):
-        calc_force(planet,solarsystem[np.arange(len(solarsystem)) != i],dt)
-        
-    for ast in asteroids:
-        calc_force(ast,solarsystem,dt)
+
+    calc_force(solarsystem,solarsystem,dt,True)
+    calc_force(asteroids,solarsystem,dt,False)
     
     asteroids[:,1:4]   += asteroids[:,4:7] * dt   
     solarsystem[:,1:4] += solarsystem[:,4:7] * dt   
@@ -111,7 +136,8 @@ def random_system(
         vz   = 0
         mass = random()*solarmass*10+1e20;
         solarsystem[i+1] = np.array([mass,px,py,pz,vx,vy,vz])
-        
+
+
     asteroids = np.zeros((b,7))
     for i in xrange(b):
         px, py,pz = random(), random(), random()*.01
@@ -128,7 +154,6 @@ def random_system(
         vz   = 0
         mass = random()*solarmass*10+1e14;
         asteroids[i] = np.array([mass,px,py,pz,vx,vy,vz])
-        
 #    
 #    solarsystem = [{'m': 1e6*solarmass, 'x': 0, 'y': 0, 'z': 0, 'vx': 0, 'vy': 0, 'vz': 0}]
 #    for i in xrange(n):

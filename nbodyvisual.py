@@ -80,7 +80,7 @@ def nbody_debug(n, bodies, time_step):
     y_max = 1e18
     z_max = 1e18
     
-    solarsystem, asteroids = random_system(x_max, y_max, z_max, n, bodies)
+    solarsystem, asteroids= random_system(x_max, y_max, z_max, n, bodies)
 
     P3 = gfx_init(x_max, y_max, z_max)
     dt = 1e12  # One hundred year timesteps ensures that we see movement
