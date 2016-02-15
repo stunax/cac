@@ -46,6 +46,8 @@ def move(solarsystem, asteroids, dt):
     """Move the bodies
     first find forces and change velocity and then move positions
     """
+        
+    
     for i,planet in enumerate(solarsystem):
         calc_force(planet,solarsystem[np.arange(len(solarsystem)) != i],dt)
         
