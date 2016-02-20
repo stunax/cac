@@ -157,40 +157,6 @@ def random_system(
         vz   = 0
         mass = random()*solarmass*10+1e14;
         asteroids[i] = numpy.array([mass,px,py,pz,vx,vy,vz])
-#    
-#    solarsystem = [{'m': 1e6*solarmass, 'x': 0, 'y': 0, 'z': 0, 'vx': 0, 'vy': 0, 'vz': 0}]
-#    for i in xrange(n):
-#        px, py,pz = random(), random(), random()*.01
-#        dist = (1.0/sqrt(px*px+py*py+pz*pz))-(.8-random()*.1)
-#        px = x_max*px*dist*sign(.5-random())
-#        py = y_max*py*dist*sign(.5-random())
-#        pz = z_max*pz*dist*sign(.5-random())
-#        magv = circlev(px,py, pz)
-#            
-#        absangle = arctan(abs(py/px))
-#        thetav= pi/2-absangle
-#        vx   = -1*sign(py)*cos(thetav)*magv
-#        vy   = sign(px)*sin(thetav)*magv
-#        vz   = 0
-#        mass = random()*solarmass*10+1e20;
-#        solarsystem.append({'m':mass, 'x':px, 'y':py, 'z':pz, 'vx':vx, 'vy':vy, 'vz':vz})
-
-#    asteroids = []
-#    for i in xrange(b):
-#        px, py,pz = random(), random(), random()*.01
-#        dist = (1.0/sqrt(px*px+py*py+pz*pz))-(random()*.2)
-#        px = x_max*px*dist*sign(.5-random())
-#        py = y_max*py*dist*sign(.5-random())
-#        pz = z_max*pz*dist*sign(.5-random())
-#        magv = circlev(px,py, pz)
-#        
-#        absangle = arctan(abs(py/px))
-#        thetav= pi/2-absangle
-#        vx   = -1*sign(py)*cos(thetav)*magv
-#        vy   = sign(px)*sin(thetav)*magv
-#        vz   = 0
-#        mass = random()*solarmass*10+1e14;
-#        asteroids.append({'m':mass, 'x':px, 'y':py, 'z':pz, 'vx':vx, 'vy':vy, 'vz':vz})
 
     return solarsystem, asteroids
 
