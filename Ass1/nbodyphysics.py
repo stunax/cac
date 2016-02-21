@@ -82,7 +82,8 @@ def move(solarsystem, asteroids, dt):
     asteroids[1:4] += asteroids[4:7] * dt
 
 
-#    for i in solarsystem:
+#
+# for i in solarsystem:
 #        for j in solarsystem:
 #            if i != j:
 #                calc_force(i, j, dt)
