@@ -30,15 +30,15 @@ def show(sub, solarsystem, bodies):
     sub.clear()
 
     sub.scatter(
-                solarsystem[0,1],
-                solarsystem[0,2],
-                solarsystem[0,3],
+                solarsystem[1,0],
+                solarsystem[2,0],
+                solarsystem[3,0],
                 s=100,
                 marker='o',
                 c='yellow',
             )
     #Planets
-    sub.scatter(solarsystem[1:,1],solarsystem[1:,2],solarsystem[1:,3],s = 5,marker = 'o',c = "blue")
+    sub.scatter(solarsystem[1,1:],solarsystem[2,1:],solarsystem[3,1:],s = 5,marker = 'o',c = "blue")
 #    sub.scatter(
 #                [i['x'] for i in solarsystem[1:]],
 #                [i['y'] for i in solarsystem[1:]],
@@ -50,7 +50,7 @@ def show(sub, solarsystem, bodies):
 
     
 #Asteroids
-    sub.scatter(bodies[1:,1],bodies[1:,2],bodies[1:,3],s = 1,marker = '.',c = "green")
+    sub.scatter(bodies[1],bodies[2],bodies[3],s = 1,marker = '.',c = "green")
 #    sub.scatter(
 #                [i['x'] for i in bodies],
 #                [i['y'] for i in bodies],
