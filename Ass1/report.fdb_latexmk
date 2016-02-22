@@ -1,0 +1,13 @@
+# Fdb version 3
+["latex"] 1455885802 "report.tex" "report.dvi" "report" 1455885812
+  "/etc/texmf/web2c/texmf.cnf" 1455560136 1101 af7716885e081ab43982cab7b4672c1a ""
+  "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1435377840 31349 7675f8adfbe12aae865d340d35423a49 ""
+  "/usr/share/texmf/web2c/texmf.cnf" 1435377840 31349 7675f8adfbe12aae865d340d35423a49 ""
+  "/var/lib/texmf/web2c/pdftex/latex.fmt" 1455560193 3843965 4487790d56214c2fed39e8e17b11c20d ""
+  "Article.cls" 0 -1 0 ""
+  "report.aux" 1455619714 531 6eb3c1e005ca870660d1ed63f31eb38c ""
+  "report.tex" 1455884978 1620 8575631b4ea97e0698a6cfbbedc6a9ae ""
+  (generated)
+  "report.dvi"
+  "report.log"
+  "report.aux"
