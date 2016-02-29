@@ -2,12 +2,15 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-from RD_physics import RD, gen_system 
+from RD_physics import RD, gen_system
+from multiprocessing import Pool
 
 def RD_debug(n, U, V, dx, dt):
     plt.ion()
+    cpus = 4
+    my_pool = Pool(cpus)
     for i in range(n):
-        RD(U, V, dx, dt)
+        RD(U, V, dx, dt, my_pool)
 
         if i%1000 == 0:
             print i

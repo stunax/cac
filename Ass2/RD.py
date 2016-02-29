@@ -3,11 +3,15 @@ import time
 
 import numpy as np
 import matplotlib.pyplot as plt
-from RD_physics import RD, gen_system 
+from RD_physics import RD, gen_system
+from multiprocessing import Pool
 
 def RD_bench(n, U, V, dx, dt):
+
+    cpus = 32
+    my_pool = Pool(cpus)
     for i in xrange(n):
-        RD(U, V, dx, dt)
+        RD(U, V, dx, dt, my_pool)
 
 if __name__ == '__main__':
 
