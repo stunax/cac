@@ -7,7 +7,7 @@ from multiprocessing import Pool
 
 def RD_debug(n, U, V, dx, dt):
     plt.ion()
-    cpus = 3
+    cpus = 4
     pool = Pool(processes=cpus)
 
     for i in range(n):

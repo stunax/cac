@@ -6,9 +6,8 @@ import matplotlib.pyplot as plt
 from RD_physics import RD, gen_system
 from multiprocessing import Pool
 
-def RD_bench(n, U, V, dx, dt):
+def RD_bench(n, U, V, dx, dt,cpus):
 
-    cpus = 16
     pool = Pool(processes=cpus)
     for i in xrange(n):
         RD(dx, dt,pool, cpus*2)
@@ -18,6 +17,8 @@ def RD_bench(n, U, V, dx, dt):
 
 if __name__ == '__main__':
 
+    cpus = 16
+    print str(cpus) + " cpus"
     for size in (500, 1000, 1500):
         dx = 2./size  # space step
         T = 10.0  # total time
@@ -26,10 +27,11 @@ if __name__ == '__main__':
 
         U, V= gen_system(size)
 
-        start = time.time()
-        RD_bench(n, U, V, dx, dt)
-        stop = time.time()
 
-        print 'Simulated ' + str(size) + ' squared system for ' \
-            + str(n) + ' timesteps in ' + str(stop - start) \
-            + ' seconds'
+        message = str(size)
+        for i in range(3):
+            start = time.time()
+            RD_bench(n, U, V, dx, dt,cpus)
+            stop = time.time()
+            message += ',' + str(stop - start)
+        print  message
