@@ -17,7 +17,7 @@ def RD_bench(n, U, V, dx, dt,cpus):
 
 if __name__ == '__main__':
 
-    cpus = 16
+    cpus = 8
     print str(cpus) + " cpus"
     for size in (500, 1000, 1500):
         dx = 2./size  # space step
