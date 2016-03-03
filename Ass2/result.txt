@@ -1,0 +1,25 @@
+32
+Simulated 500 squared system for 1000 timesteps in 9.93963289261 seconds
+Simulated 1000 squared system for 1000 timesteps in 20.2563278675 seconds
+Simulated 1500 squared system for 1000 timesteps in 45.6603581905 seconds
+
+Simulated 500 squared system for 1000 timesteps in 9.92034316063 seconds
+Simulated 1000 squared system for 1000 timesteps in 20.1974289417 seconds
+Simulated 1500 squared system for 1000 timesteps in 46.8621170521 seconds
+
+Simulated 500 squared system for 1000 timesteps in 9.93341493607 seconds
+Simulated 1000 squared system for 1000 timesteps in 20.3718180656 seconds
+Simulated 1500 squared system for 1000 timesteps in 43.7955288887 seconds
+
+16
+Simulated 500 squared system for 1000 timesteps in 10.2964279652 seconds
+Simulated 1000 squared system for 1000 timesteps in 27.5690369606 seconds
+Simulated 1500 squared system for 1000 timesteps in 69.2571320534 seconds
+
+Simulated 500 squared system for 1000 timesteps in 10.2937221527 seconds
+Simulated 1000 squared system for 1000 timesteps in 27.6684191227 seconds
+Simulated 1500 squared system for 1000 timesteps in 70.6275389194 seconds
+
+Simulated 500 squared system for 1000 timesteps in 10.5028481483 seconds
+Simulated 1000 squared system for 1000 timesteps in 27.8634598255 seconds
+Simulated 1500 squared system for 1000 timesteps in 70.6500070095 seconds
