@@ -81,7 +81,7 @@ def fixVer(args):
 
 
 def RD(dx, dt, pool,workers):
-    rowsPerWorker = U.shape[0] / workers+1
+    rowsPerWorker = U.shape[0] / workers + 1
     #V = V_
     #U = U_
 
