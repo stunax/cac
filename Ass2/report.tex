@@ -22,7 +22,7 @@
 
 \title{
   \vspace{3cm}
-  \Huge{CAC assignment 1} \\
+  \Huge{CAC assignment 2} \\
   \Large{Christian Møllgaard}\\
 }
 \usepackage{natbib}
@@ -43,57 +43,29 @@
 
 %\newpage
 
-%% Write your dissertation here.
-\section{Changing the data structur}
-Before the problem can be vectorised, the data structure containing the data needs to be vectorised. 
-To make the best use of memory cahing i create my solar system and asteroids as two dimensional vectors, (7,n).
-They have the dimension 7 first, so the values used at the same time, gets cached together.
 
-As an example i show the new definition of the solar system array.
-\lstinputlisting[language=Python, firstline=125, lastline=139]{nbodyphysics.py}
 
-\section{What to vectorize}
-The costly action in this script is the calc force function. This function is called on every object once for every planet there is using for loops. 
+%\lstinputlisting[language=Python, firstline=56, lastline=82]{nbodyphysics.py}
 
-The main vetorizition goal is to remove these for loops. First challenge is to calculate the distance from every object to every other objet. This is done using ``newaxis''.
-Then i need to fill the diagonal when comparing distance of planets to all planets, to make sure, there is no zero distance from planets to it self. I fill with the value 1, which is fine bacause the equation will be zero at the second half.
-Then i calculate the mass difference like for every planet using newaxis.
-Then i update the force of each planet for each dimension once at a time. This could be done using a one liner, but i found no gain from doin so, and this is easier to understand.
+\section{Introduction}
+The task of this assignment was to convert the given program to run in parallel on the same generated data. To do this the multiprocessing library is used together with the provided shared memory array shmarray class.
 
-My calc force and move function ended up looking like this:
-\lstinputlisting[language=Python, firstline=56, lastline=82]{nbodyphysics.py}
+\section{What have changed}
+\subsection*{Overall change}
+As a first step i converted V and U to shared memory arrays using the shmarray library, and then made them global. This was needed to make sure the arrays could be called from within the new other processes. The main functions (RD and RD\_visual) then create a process pool. 
+
+Then i divide U an V into cpu*2 pieces. Then i run the real RD function on each part seperatly and saving the result in another array called Ures and Vres. When all parts have been processes the result arrays are then copied into real array, and then the outer edges gets handled.
+
+\subsection{The splitter}
+Before any processing can be done, the data needs to be split up into a few pieces. I split the images based on 
 
 
 \section{Result}
-Running the script on marge using the config file provided, i got these results:
 
-\begin{table}[h!]
-\centering
-\caption{My caption}
-\label{my-label}
-\begin{tabular}{|l|l|l|l|l|}
-\hline
-bodies   & run 1         & run 2         & run 3         & avg           \\ \hline
-1.00E+04 & 0.0949919224  & 0.0790441036  & 0.0791590214  & 0.0843983491  \\ \hline
-1.00E+05 & 1.1335251331  & 1.0382509232  & 1.0500969887  & 1.0739576817  \\ \hline
-1.00E+06 & 13.1345989704 & 12.4405839443 & 12.4634170532 & 12.6795333226 \\ \hline
-\end{tabular}
-\end{table}
-The results provided for the sequential version:
-\begin{table}[h!]
-\centering
-\caption{My results}
-\label{my-label}
-\begin{tabular}{|l|l|l|l|l|}
-\hline
-bodies   & run 1        & run 2        & run 3        & avg         \\ \hline
-1E4 & 16,21 & 16,49 & 16,25 & 16,32 \\ \hline
-1E5 & 161,89  & 165,88  & 163,16  & 163,65 \\ \hline
-1E6 & 1616,78  & 1658,22  & 1627,89   & 1634,30 \\ \hline
-\end{tabular}
-\end{table}
 
-Comparing the results of these two functions it's easy to see that there is a significant speed up using vectors. 
-\includegraphics[scale=0.5]{speedup}\includegraphics[scale=0.5]{runtime}
+
+\includegraphics[scale=0.5]{plots}
+
+\includegraphics[scale=0.5]{speedup}
 
 \end{document}

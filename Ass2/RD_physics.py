@@ -104,12 +104,6 @@ def RD(dx, dt, pool,workers):
     resultver = pool.map_async(fixVer,args)
     resultver.get()
 
-    #for Z in (U, V):
-    #    Z[0,:] = Z[1,:]
-    #    Z[-1,:] = Z[-2,:]
-    #    Z[:,0] = Z[:,1]
-    #    Z[:,-1] = Z[:,-2]
-
 def gen_system(size):
     global V
     global U
