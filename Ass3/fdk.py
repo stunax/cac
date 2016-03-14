@@ -36,14 +36,14 @@ def main():
         # Reconstruct 3D Volume from recorded 2D images
 
         start = time()
-        #result = fdkcore(nr_projections, projections, combined_matrix,
-        #                 z_voxel_coords, transform_matrix, z_voxels,
-        #                 detector_rows, detector_columns, recon_volume,
-        #                 volume_weight, count_out=False)
-        result = fdkouterstd(nr_projections, projections, combined_matrix,
+        result = fdkcore(nr_projections, projections, combined_matrix,
                          z_voxel_coords, transform_matrix, z_voxels,
                          detector_rows, detector_columns, recon_volume,
-                         volume_weight)
+                         volume_weight, count_out=False)
+        #result = fdkcoreserver(nr_projections, projections, combined_matrix,
+        #                 z_voxel_coords, transform_matrix, z_voxels,
+        #                 detector_rows, detector_columns, recon_volume,
+        #                 volume_weight)
 
         stop = time()
         print 'System size', (x_voxels, y_voxels, z_voxels), 'Time taken', stop - start
