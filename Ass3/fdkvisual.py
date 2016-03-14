@@ -14,7 +14,7 @@ def show(data):
         plt.clf()
         plt.matshow(data[i,:,:], fignum=1, cmap=cm.Greys_r)
         plt.draw()
-        plt.pause(0.01)
+        plt.pause(0.02)
         print "Showing: %d/%d" % (i+1, data.shape[0])
 
     plt.ioff()
@@ -46,7 +46,7 @@ def main():
     recon_volume = zeros((z_voxels, y_voxels, x_voxels), dtype=float32)
 
     print "Showing filtered projections"
-    show(projections)
+    #show(projections)
         
     # Reconstruct 3D Volume from recorded 2D images
 
@@ -55,6 +55,10 @@ def main():
                      z_voxel_coords, transform_matrix, z_voxels,
                      detector_rows, detector_columns, recon_volume,
                      volume_weight, count_out=True)
+    #result = fdkouterstd(nr_projections, projections, combined_matrix,
+    #                 z_voxel_coords, transform_matrix, z_voxels,
+    #                 detector_rows, detector_columns, recon_volume,
+    #                 volume_weight)
     stop = time()
     print 'System size', (x_voxels, y_voxels, z_voxels), 'Time taken', stop - start
     print "Showing reconstructed volume slices"

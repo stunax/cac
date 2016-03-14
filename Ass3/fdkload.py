@@ -12,10 +12,15 @@ def fdkload(nr_projections,
     
     # Load 2D projection data
 
+    global projections
+    global combined_matrix
+    global z_voxel_coords
+    global transform_matrix
+    global volume_weight
+
     projections = fromfile('input/projections.bin', dtype=float32)
     projections.shape = (nr_projections, detector_rows,
                          detector_columns)
-
     # Load combined X,Y voxel coordinates
 
     combined_matrix = fromfile('input/%s/combined.bin' % voxels, dtype=float32)
