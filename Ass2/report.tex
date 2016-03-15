@@ -63,17 +63,31 @@ In the data generation, I converted all returned Numpy arrays to shmarrays, to m
 \subsection{The handler}
 Before any processing can be done, the data needs to be split up into a few pieces. I split the images based on the amount of desired cpus and a constant, that i have not had the time to optimize, so it is hard coded to 2. At this point i only find the block size, and do not actually split the data yet. I add 1 to the block size to handle when the block size and size of data does not match, and could lead to some rows not getting processed.
 
-The handler then starts the workers with a slight modified version of the original RD function. The part where it updated the values and the edges have been taken out, and it uses the global arrays instead of passed arrays. It gets as argument the block size, and it's index. It then creates views of global arrays, that it uses locally before storing the result in the result array.
+The handler then starts the workers with a slight modified version of the original RD function. The part where it updated the values and the edges have been taken out, and it uses the global arrays instead of passed arrays. It gets as argument the block size, and it's index. It then creates views of global arrays, that it uses locally before storing the result in the result array. Because the RD function is dependent on data that is outside of it's current "scope", I increase the size of the local view, so it also contains data from the next process. This way i create some ghost padding, that both the current process, and the next will work with.
 
-The handler wait for all processes to finish this process before moving on, to copying the result back into the original matrices. This is also done in parallel. If I did not have to have global arrays, i could spare alot of time here, by just returning a modified version of the result array as U and V, instead of copying the data back into U and V, but the shmarrays does not really work for me in this way.
+The handler wait for all processes to finish this process before moving on, to copying the result back into the original matrices. This is also done in parallel. If I did not have to have global arrays, i could spare a lot of time here, by just returning a modified version of the result array as U and V, instead of copying the data back into U and V, but the shmarrays does not really work for me in this way.
 
 After all this is done, I fix the edges.
 
 \section{Result}
 I was unable to get all my test data due to bad timing.
 
-To see how the function scales i had planes to find the average with different amount of cpus. There is a clear performance increase, but it does not scale very well with the amount of cpus. Looking at table and figues below, it is easy to see that it does perform faster with more cpus, but it does not scale very well. Some of these bad numbers may be due to the hardcoded cpus*2 workers size.
+To see how the function scales I had planes to find the average with different amount of cpus. There is a clear performance increase, but it does not scale very well with the amount of cpus. Looking at table and figues below, it is easy to see that it does perform faster with more cpus, but it does not scale very well. Some of these bad numbers may be due to the hardcoded cpus*2 workers size.
 \includegraphics[clip, trim=0 5cm 0 5cm, width=1\textwidth]{plots}\\
+
+As shown in the speedup tables below, there is a significant speedup when increasing the cpu count. The speedup drops very quickly, and the speed up graph would probably stagnate quite soon, if tested with a higher amount of cpus.
+\begin{table}[h!]
+\centering
+\caption{Speedup}
+\label{my-label}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+size & 4 cpus   & 8 cpus   & 16 cpus  & 32 cpus  \\ \hline
+500  & 4.286675 & 6.149203 & 8.071036 & 8.3977   \\ \hline
+1000 & 3.015844 & 5.762412 & 11.11917 & 14.63639 \\ \hline
+1500 & -        & 4.964749 & 9.243043 & 14.46534 \\ \hline
+\end{tabular}
+\end{table}
 \begin{table}[h!]
 \centering
 \caption{Speedup divided by amount of cpus}
