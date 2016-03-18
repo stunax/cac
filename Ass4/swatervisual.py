@@ -56,6 +56,7 @@ class Visualize:
 
         self.ax.set_zlim3d(-2, 4)
         plt.draw()
+        plt.pause(0.002)
 
     def end(self):
         """End plot"""
