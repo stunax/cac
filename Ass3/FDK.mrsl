@@ -1,0 +1,42 @@
+::VGRID::
+eScience/Courses/ClusterComputing
+
+::EXECUTE::
+uname -a
+rm -rf $HOME/input
+ln -sf $CCDATA/fdk $HOME/input
+export PYRO_TCP_LISTEN_BACKLOG=$((4*MIG_JOBNODECOUNT*MIG_JOBCPUCOUNT))
+export PYRO_MAXCONNECTIONS=$((4*MIG_JOBNODECOUNT*MIG_JOBCPUCOUNT))
+export PSPYTHON=$PYTHON
+export PSPROCS=$((MIG_JOBNODECOUNT))
+export PSWAITPROCS=$PSPROCS
+$PSCLEAN fdk.py
+$PSRUN fdk.py $((MIG_JOBNODECOUNT)) $((MIG_JOBCPUCOUNT))
+
+::INPUTFILES::
+fdk.py
+fdkcore.py
+fdkload.py
+
+::CPUTIME::
+600
+
+::RESOURCE::
+manjula.esci.nbi.dk.0_*
+
+::CPUCOUNT::
+32
+
+::NODECOUNT::
+8
+
+::MEMORY::
+204800
+
+::RUNTIMEENVIRONMENT::
+PYTHON-2.X-1
+PYPASTSET-ANY-2
+CC-COURSE-INPUT
+
+::NOTIFY::
+email: SETTINGS

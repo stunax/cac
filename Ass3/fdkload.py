@@ -1,22 +1,29 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import os
-from numpy import fromfile, float32
 
-def fdkload(nr_projections, 
-            detector_rows, 
+from numpy import fromfile, float32
+import os
+
+def fdkload(nr_projections,
+            detector_rows,
             detector_columns,
             voxels):
 
     x_voxels = y_voxels = z_voxels = voxels
 
-    #Tried to fix mrsl error
-    directory = '/fdk' if os.getenv('CCDATA') else 'input'
+    # Define folder to load input from
+    directory = os.getenv('CCDATA')
+    if directory:
+        directory += '/fdk'
+    else:
+        directory = 'input'
 
     # Load 2D projection data
+
     projections = fromfile(directory + '/projections.bin', dtype=float32)
     projections.shape = (nr_projections, detector_rows,
                          detector_columns)
+
     # Load combined X,Y voxel coordinates
 
     combined_matrix = fromfile(directory + '/%s/combined.bin' % voxels, dtype=float32)
